@@ -27,6 +27,19 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.dianping</groupId>
+            <artifactId>csc-common-util</artifactId>
+            <version>0.0.5</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+
         <!-- 里面含有parentDAO-->
         <dependency>
             <groupId>com.dianping</groupId>
