@@ -1,8 +1,7 @@
-package com.dianping.csc.common.service.dao.mock;
+package com.dianping.csc.common.service.dao;
 
 import com.dianping.avatar.dao.DAOMethod;
 import com.dianping.core.type.PageModel;
-import com.dianping.csc.common.service.dao.DAO;
 import com.dianping.csc.common.service.entity.Entity;
 import org.springframework.dao.DataAccessException;
 

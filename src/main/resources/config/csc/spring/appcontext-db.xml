@@ -7,7 +7,7 @@
 
     <!-- 数据源-->
     <bean id="dataSource" class="com.dianping.zebra.group.jdbc.GroupDataSource" init-method="init">
-        <property name="jdbcRef" value="csconline"/>
+        <property name="jdbcRef" value="${app.jdbcRef}"/>
     </bean>
 
 

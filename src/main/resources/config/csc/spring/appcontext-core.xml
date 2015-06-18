@@ -17,7 +17,7 @@
 
     <!-- lion -->
     <bean name="placeholder" class="com.dianping.lion.client.SpringConfig">
-        <property name="propertiesPath" value="config/applicationContext.properties"/>
+        <property name="propertiesPath" value="app.properties"/>
     </bean>
 
 </beans>

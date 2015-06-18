@@ -1,15 +1,25 @@
-package base;
+package com.dianping.csc.common.service.dao;
 
-import com.dianping.csc.common.service.dao.DAO;
 import com.dianping.csc.common.service.entity.Entity;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 
 /**
  * Created by yuchao on 15/6/17.
  */
-public abstract class DAOTest extends SpringBaseTest{
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {
+        "classpath*:/config/spring/local/appcontext-*.xml",
+        "classpath*:config/csc/spring/appcontext-*.xml"
+
+})
+public abstract class DAOTest {
 
     protected DAO dao;
     protected Entity entity;
@@ -39,6 +49,7 @@ public abstract class DAOTest extends SpringBaseTest{
         Integer id = dao.insert(entity);
         Assert.assertEquals(entity, dao.get(id));
     }
+
     @Test
     public void testUpdate() throws Exception {
         Integer id = dao.insert(entity);
