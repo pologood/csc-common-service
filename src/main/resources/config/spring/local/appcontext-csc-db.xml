@@ -5,12 +5,6 @@
                            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
 
-    <!-- 数据源-->
-    <bean id="dataSource" class="com.dianping.zebra.group.jdbc.GroupDataSource" init-method="init">
-        <property name="jdbcRef" value="${app.jdbcRef}"/>
-    </bean>
-
-
     <!-- The SqlMapClient configuration for avatar-based System -->
     <bean id="sqlMapClient" class="com.dianping.avatar.dao.ibatis.spring.LimitSqlMapClientFactoryBean">
         <property name="dataSource" ref="dataSource"/>
