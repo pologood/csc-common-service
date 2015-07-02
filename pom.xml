@@ -6,7 +6,7 @@
 
     <groupId>com.dianping</groupId>
     <artifactId>csc-common-service</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <packaging>jar</packaging>
     <name>csc-common-service</name>
 
@@ -23,6 +23,7 @@
         <servlet-api.version>2.5</servlet-api.version>
         <commons-lang.version>2.6</commons-lang.version>
         <env>qa</env>
+        <lombok.version>1.12.2</lombok.version>
     </properties>
 
     <dependencies>
@@ -108,9 +109,13 @@
         <!-- 添加 Spring 的架构开始-->
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -145,7 +150,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.12.2</version>
+            <version>${lombok.version}</version>
         </dependency>
         <!-- 测试框架结束-->
 
