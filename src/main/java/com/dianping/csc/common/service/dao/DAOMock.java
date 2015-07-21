@@ -5,10 +5,7 @@ import com.dianping.core.type.PageModel;
 import com.dianping.csc.common.service.entity.Entity;
 import org.springframework.dao.DataAccessException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 所有DAO测试的基础类,以map存储
@@ -21,7 +18,10 @@ public class DAOMock<T extends Entity> implements DAO<T> {
 
     public Integer insert(T entity) {
         entity.setId(++id);
+        entity.setAddTime(new Date());
+        entity.setUpdateTime(new Date());
         db.put(id, entity);
+
 
         return id;
     }
@@ -45,6 +45,7 @@ public class DAOMock<T extends Entity> implements DAO<T> {
     }
 
     public Integer update(int id, T entity) {
+        entity.setUpdateTime(new Date());
         db.put(id, entity);
 
         return 1;
