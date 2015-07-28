@@ -31,7 +31,7 @@
         <dependency>
             <groupId>com.dianping</groupId>
             <artifactId>csc-common-util</artifactId>
-            <version>0.0.5</version>
+            <version>1.0.0-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
