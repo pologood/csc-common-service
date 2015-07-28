@@ -19,7 +19,7 @@
     <properties>
         <spring.version>4.1.1.RELEASE</spring.version>
         <junit.version>4.11</junit.version>
-        <platform-sdk.version>1.1.9</platform-sdk.version>
+        <platform-sdk.version>1.2.0</platform-sdk.version>
         <servlet-api.version>2.5</servlet-api.version>
         <commons-lang.version>2.6</commons-lang.version>
         <env>qa</env>
