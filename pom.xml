@@ -94,6 +94,12 @@
 
             </exclusions>
         </dependency>
+        <!--显式调用，sdk升级关注下，对应的cat-core是否升级了-->
+        <dependency>
+            <groupId>com.dianping.cat</groupId>
+            <artifactId>cat-core</artifactId>
+            <version>1.3.4</version>
+        </dependency>
         <!--点评框架结束-->
 
 
