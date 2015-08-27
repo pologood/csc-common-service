@@ -25,10 +25,10 @@ public abstract class DAOTest {
 
     @Before
     public void setUp() throws Exception {
-        init(dao, entity);
+        init();
     }
 
-    protected abstract void init(DAO dao, Entity entity);
+    protected abstract void init();
 
 
     @Test
@@ -65,4 +65,6 @@ public abstract class DAOTest {
         this.dao = dao;
         this.entity = entity;
     }
+
+
 }
