@@ -5,13 +5,8 @@ import com.dianping.core.type.PageModel;
 import com.dianping.csc.common.service.entity.Entity;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-import com.google.gson.Gson;
-import lombok.Data;
-import org.junit.Assert;
 import org.springframework.dao.DataAccessException;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -29,7 +24,6 @@ public class DAOMock<T extends Entity> implements DAO<T> {
         entity.setAddTime(new Date());
         entity.setUpdateTime(new Date());
         db.put(id, entity);
-
 
         return id;
     }
@@ -52,43 +46,19 @@ public class DAOMock<T extends Entity> implements DAO<T> {
         return list;
     }
 
-    public List<T> getByProperties(Map<String, Object> properties) {
+    public List<T> getByProperties(Map<String, Object> propertyValues) {
         ArrayList<T> arrayList = Lists.newArrayList();
+        row:
         for (T t : db.values()) {
-            //TODO:提取到for 外
-            /**
-             * 获取对象所有属性
-             *
-             */
-            Field[] declaredFields = t.getClass().getDeclaredFields();
-            /**
-             * 获取查询属性
-             */
-            HashMap<Object, Field> hashmap = getObjectFieldHashMap(properties, declaredFields);
-
-            boolean flag = true;
-            for (Object key : hashmap.keySet()) {
-                if (!properties.get(key).equals(getFieldValue(t, hashmap.get(key)))) {
-                    flag = false;
+            for (String property : propertyValues.keySet()) {
+                if (!propertyValues.get(property).equals(getPropertyValue(t, property))) {
+                    continue row;
                 }
             }
 
-            if (flag) {
-                arrayList.add(t);
-            }
-
+            arrayList.add(t);
         }
         return arrayList;
-    }
-
-    private HashMap<Object, Field> getObjectFieldHashMap(Map<String, Object> properties, Field[] declaredFields) {
-        HashMap<Object, Field> hashmap = Maps.newHashMap();
-        for (Field declaredField : declaredFields) {
-            if (properties.keySet().contains(declaredField.getName())) {
-                hashmap.put(declaredField.getName(), declaredField);
-            }
-        }
-        return hashmap;
     }
 
     public Integer update(int id, T entity) {
@@ -131,9 +101,8 @@ public class DAOMock<T extends Entity> implements DAO<T> {
         return null;
     }
 
-    private static <T> Object getFieldValue(T t1, Field field) {
-        String fieldName = field.getName();
-        String methodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+    private static <T> Object getPropertyValue(T t1, String property) {
+        String methodName = "get" + property.substring(0, 1).toUpperCase() + property.substring(1);
         Object result = null;
         try {
             Method method = t1.getClass().getMethod(methodName);
