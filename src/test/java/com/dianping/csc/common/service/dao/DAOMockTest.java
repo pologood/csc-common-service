@@ -1,5 +1,6 @@
 package com.dianping.csc.common.service.dao;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.junit.Assert;
 import org.junit.Test;
@@ -39,6 +40,18 @@ public class DAOMockTest {
         Assert.assertFalse(list.contains(entity1));
         Assert.assertFalse(list.contains(entity2));
         Assert.assertTrue(list.contains(entity3));
+
+
+        HashMap<String, Object> map1 = Maps.newHashMap();
+        map1.put("age", 12);
+        map1.put("sex", Lists.newArrayList("男","女"));
+
+        List list1 = daoMock.getByProperties(map1);
+
+        Assert.assertTrue(list1.contains(entity));
+        Assert.assertTrue(list1.contains(entity1));
+        Assert.assertFalse(list1.contains(entity2));
+        Assert.assertTrue(list1.contains(entity3));
     }
 
 }

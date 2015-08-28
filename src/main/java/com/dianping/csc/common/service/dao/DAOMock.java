@@ -48,15 +48,28 @@ public class DAOMock<T extends Entity> implements DAO<T> {
 
     public List<T> getByProperties(Map<String, Object> propertyValues) {
         ArrayList<T> arrayList = Lists.newArrayList();
-        row:
+
         for (T t : db.values()) {
+
+            boolean flag = true;
             for (String property : propertyValues.keySet()) {
-                if (!propertyValues.get(property).equals(getPropertyValue(t, property))) {
-                    continue row;
+                if(propertyValues.get(property) instanceof List){
+                    if(!((List) propertyValues.get(property)).contains(getPropertyValue(t,property))){
+                        flag =false;
+                    }
+
+                }
+                else{
+                    if (!propertyValues.get(property).equals(getPropertyValue(t, property))) {
+                        flag = false;
+                    }
                 }
             }
 
-            arrayList.add(t);
+            if (flag) {
+                arrayList.add(t);
+            }
+
         }
         return arrayList;
     }
