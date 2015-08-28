@@ -26,38 +26,44 @@ public class DaoCodeGenerate {
         Configuration configuration = getFreeMarkerConfiguration(sourceDirectory);
 
         //生成dao
+        generateDaoTemplate(clazz, file, configuration);
+
+        //生成dao配置
+        //生成sqlmap-config
+        //生成sqlmap
+        //生成test
+    }
+
+    private static void generateDaoTemplate(Class clazz, File file, Configuration configuration) {
         String daoFilePath = file.getParent() + "/dao/" + clazz.getSimpleName() + "DAO.java";
         File daoFile = new File(daoFilePath);
         try {
             if (daoFile.exists()) {
                 daoFile.delete();
-                daoFile.createNewFile();
-                Template template = null;
-                try {
-                    template = configuration.getTemplate("dao.ftl");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                HashMap<Object, Object> map = Maps.newHashMap();
-                map.put("package", clazz.getName().replaceAll("\\.[a-zA-Z]*\\." + clazz.getSimpleName(), ".dao"));
-                map.put("entitySimple", clazz.getSimpleName());
-                map.put("entity", clazz.getName());
-                map.put("daoSimple", clazz.getSimpleName() + "DAO");
-                Writer writer = new OutputStreamWriter(new FileOutputStream(daoFile));
-                try {
-                    template.process(map,writer);
-                } catch (TemplateException e) {
-                    e.printStackTrace();
-                }
             }
 
+            daoFile.createNewFile();
+            Template template = null;
+            try {
+                template = configuration.getTemplate("dao.ftl");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            HashMap<Object, Object> map = Maps.newHashMap();
+            map.put("package", clazz.getName().replaceAll("\\.[a-zA-Z]*\\." + clazz.getSimpleName(), ".dao"));
+            map.put("entitySimple", clazz.getSimpleName());
+            map.put("entity", clazz.getName());
+            map.put("daoSimple", clazz.getSimpleName() + "DAO");
+            Writer writer = new OutputStreamWriter(new FileOutputStream(daoFile));
+            try {
+                template.process(map,writer);
+                writer.flush();
+            } catch (TemplateException e) {
+                e.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //生成dao配置
-        //生成sqlmap-config
-        //生成sqlmap
-        //生成test
     }
 
     private static Configuration getFreeMarkerConfiguration(File sourceDirectory) {
