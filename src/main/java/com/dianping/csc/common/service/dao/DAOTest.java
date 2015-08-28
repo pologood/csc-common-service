@@ -1,6 +1,7 @@
 package com.dianping.csc.common.service.dao;
 
 import com.dianping.csc.common.service.entity.Entity;
+import com.dianping.csc.common.service.util.CustomizeJunit4ClassRunner;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * Created by yuchao on 15/6/17.
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(CustomizeJunit4ClassRunner.class)
 @ContextConfiguration(locations = {
         "classpath*:/config/spring/local/appcontext-*.xml"
 })
