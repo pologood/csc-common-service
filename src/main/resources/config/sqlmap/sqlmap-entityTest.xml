@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="EntityTest">
+
+    <insert id="insert">
+        INSERT INTO EntityTest
+        (
+        AddTime,
+        sex,
+        name
+        )
+        VALUES
+        (
+        now(),
+        #e.sex#,
+        #e.name#
+        );
+        <selectKey resultClass="java.lang.Integer" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM EntityTest
+        WHERE Id = #id#;
+    </delete>
+
+
+    <select id="get" resultClass="com.dianping.csc.common.service.entity.EntityTest">
+        SELECT * FROM EntityTest
+        WHERE Id = #id#;
+    </select>
+
+    <update id="update">
+        UPDATE  EntityTest
+        SET
+        sex = #e.sex#,
+        name = #e.name#
+        WHERE Id = #id#;
+    </update>
+
+</sqlMap>
