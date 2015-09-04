@@ -38,7 +38,7 @@ public class DaoCodeGenerate {
         logger.debug("获取的源代码目录path:" + sourceDirectory.getAbsolutePath());
 
         //freemarker配置设置
-        Configuration configuration = getFreeMarkerConfiguration(sourceDirectory);
+        Configuration configuration = getFreeMarkerConfiguration(clazz);
 
         //生成dao
         generateDao(clazz, file, configuration);
@@ -134,7 +134,7 @@ public class DaoCodeGenerate {
                     logger.warn("ID已经存在");
                     return;
                     /**
-                     * xpath 问题
+                     * TODO:xpath 问题
                      */
                     /*Element daoBean = (Element) document.selectSingleNode("//bean[@id='"+id+"']");
 
@@ -146,7 +146,7 @@ public class DaoCodeGenerate {
 
                 OutputFormat format = OutputFormat.createPrettyPrint();
                 XMLWriter xmlWriter = null;
-                //xml输出格式化
+                //TODO:xml输出格式化
                 //format.setTrimText(false);
                 try {
                     xmlWriter = new XMLWriter(new FileOutputStream(file), format);
@@ -233,10 +233,12 @@ public class DaoCodeGenerate {
         return clazz.getSimpleName() + "DAO";
     }
 
-    private static Configuration getFreeMarkerConfiguration(File sourceDirectory) {
+    private static Configuration getFreeMarkerConfiguration(Class clazz) {
         Configuration configuration = new Configuration();
         try {
-            configuration.setDirectoryForTemplateLoading(new File(getResourceDirectory(sourceDirectory) + "/config/ftl"));
+            //TODO:freemarker 读取jar中的ftl暂时不能实现
+            URL resource = clazz.getResource("/config/ftl");
+            configuration.setDirectoryForTemplateLoading(new File(resource.getFile().replace("%20", " ")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -249,6 +251,9 @@ public class DaoCodeGenerate {
 
     private static File getSourceDirectory(File file) {
         String absolutePath = file.getAbsolutePath();
+        /**
+         * jar 中的目录结构不一样，需要特别处理
+         */
         return new File(absolutePath.substring(0, absolutePath.lastIndexOf("java")) + "java");
 
     }
@@ -260,9 +265,5 @@ public class DaoCodeGenerate {
         URL url = clazz.getClassLoader().getResource(clazz.getName().replace(".", "/") + ".class");
         String currentDirectoryPath = url.toString().replace("file:", "").replace("target/classes", "src/main/java").replace("/" + clazz.getSimpleName() + ".class", "").replace("%20", " ");
         return new File(currentDirectoryPath);
-    }
-
-    public static void main(String[] args) {
-        DaoCodeGenerate.generateByJavaBean(EntityTest.class);
     }
 }
