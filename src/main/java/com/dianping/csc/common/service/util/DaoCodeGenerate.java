@@ -6,13 +6,14 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import org.apache.log4j.Logger;
-import org.dom4j.*;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
 import java.io.*;
-import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -263,8 +264,5 @@ public class DaoCodeGenerate {
 
     public static void main(String[] args) {
         DaoCodeGenerate.generateByJavaBean(EntityTest.class);
-        for (Field field : EntityTest.class.getDeclaredFields()) {
-            System.out.println(field.getName());
-        }
     }
 }
