@@ -1,6 +1,5 @@
 package com.dianping.csc.common.service.util;
 
-import com.dianping.csc.common.service.entity.EntityTest;
 import com.google.common.collect.Maps;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -56,6 +55,51 @@ public class DaoCodeGenerate {
         logger.info("ibatis sqlmap 生成成功!");
 
         //生成test
+        generateDaoTest(clazz,sourceDirectory,configuration);
+        logger.info("dao test生成成功！");
+    }
+
+    private static void generateDaoTest(Class clazz, File sourceDirectory, Configuration configuration) {
+        File testSourceDirectory = getTestSourceDirectory(sourceDirectory);
+        String daoTestPath = testSourceDirectory+"/"+getDaoPackage(clazz).replace(".", "/") + "/"+getDaoSimpleName(clazz) + "Test.java";
+        File daoTestFile = new File(daoTestPath);
+        if(daoTestFile.exists()){
+            logger.warn("daoTest文件已经存在");
+            return;
+        }else{
+            try {
+                daoTestFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Template template = null;
+
+        try {
+            template = configuration.getTemplate("daoTest.ftl");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HashMap<Object, Object> map = Maps.newHashMap();
+        map.put("package", getDaoPackage(clazz));
+        map.put("entitySimple", clazz.getSimpleName());
+        map.put("entity", clazz.getName());
+        map.put("daoSimple", getDaoSimpleName(clazz));
+        map.put("entityID",getEntityID(clazz));
+        map.put("daoID",getDaoID(clazz));
+        try {
+            template.process(map,new OutputStreamWriter(new FileOutputStream(daoTestFile)));
+        } catch (TemplateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(daoTestPath);
+    }
+
+    private static File getTestSourceDirectory(File sourceDirectory) {
+        return new File(sourceDirectory.getParentFile().getParentFile() + "/test/java");
     }
 
     private static void generateSqlmap(Class clazz, File sourceDirectory, Configuration configuration) {
@@ -63,7 +107,8 @@ public class DaoCodeGenerate {
         File sqlmapFile = new File(sqlmapPath);
 
         if (sqlmapFile.exists()) {
-            sqlmapFile.delete();
+            logger.warn("sqlmap已经存在");
+            return;
         }
         try {
             sqlmapFile.createNewFile();
@@ -107,9 +152,13 @@ public class DaoCodeGenerate {
         String springDaoConfigPath = getResourceDirectory(file) + CONFIG_SPRING_LOCAL_APPCONTEXT_CSC_DAO_XML;
         logger.debug("springDaoConfigPath：" + springDaoConfigPath);
         File springDaoConfigFile = new File(springDaoConfigPath);
-        String daoID = getDaoSimpleName(clazz).substring(0, 1).toLowerCase() + getDaoSimpleName(clazz).substring(1);
+        String daoID = getDaoID(clazz);
 
         doGenerateConfig(springDaoConfigFile, daoID, getDaoBean(clazz, configuration, daoID).toString());
+    }
+
+    private static String getDaoID(Class clazz) {
+        return getDaoSimpleName(clazz).substring(0, 1).toLowerCase() + getDaoSimpleName(clazz).substring(1);
     }
 
 
@@ -126,6 +175,7 @@ public class DaoCodeGenerate {
             return;
         } else {
             try {
+                //TODO:第二次运行read 方法耗时
                 Document document = saxReader.read(file);
                 Element rootElement = document.getRootElement();
 
@@ -198,7 +248,8 @@ public class DaoCodeGenerate {
         File daoFile = new File(daoFilePath);
         try {
             if (daoFile.exists()) {
-                daoFile.delete();
+                logger.warn("dao类已经存在");
+                return;
             }
 
             daoFile.createNewFile();
