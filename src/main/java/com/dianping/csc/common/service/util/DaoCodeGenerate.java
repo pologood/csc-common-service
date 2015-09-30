@@ -15,6 +15,7 @@ import org.dom4j.io.XMLWriter;
 import java.io.*;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Created by csophys on 15/8/28.
@@ -26,6 +27,7 @@ public class DaoCodeGenerate {
     public static final String SQL_MAP_RESOURCE_CONFIG_SQLMAP_SQLMAP_ENTITY_ID_XML = "<sqlMap resource=\"config/sqlmap/sqlmap-entityID.xml\" />";
     private static Logger logger = Logger.getLogger(DaoCodeGenerate.class);
     private static SAXReader saxReader = new SAXReader();
+
 
     public static void generateByJavaBean(Class clazz) {
         //获取当前文件目录
@@ -55,18 +57,18 @@ public class DaoCodeGenerate {
         logger.info("ibatis sqlmap 生成成功!");
 
         //生成test
-        generateDaoTest(clazz,sourceDirectory,configuration);
+        generateDaoTest(clazz, sourceDirectory, configuration);
         logger.info("dao test生成成功！");
     }
 
     private static void generateDaoTest(Class clazz, File sourceDirectory, Configuration configuration) {
         File testSourceDirectory = getTestSourceDirectory(sourceDirectory);
-        String daoTestPath = testSourceDirectory+"/"+getDaoPackage(clazz).replace(".", "/") + "/"+getDaoSimpleName(clazz) + "Test.java";
+        String daoTestPath = testSourceDirectory + "/" + getDaoPackage(clazz).replace(".", "/") + "/" + getDaoSimpleName(clazz) + "Test.java";
         File daoTestFile = new File(daoTestPath);
-        if(daoTestFile.exists()){
+        if (daoTestFile.exists()) {
             logger.warn("daoTest文件已经存在");
             return;
-        }else{
+        } else {
             try {
                 daoTestFile.createNewFile();
             } catch (IOException e) {
@@ -85,10 +87,10 @@ public class DaoCodeGenerate {
         map.put("entitySimple", clazz.getSimpleName());
         map.put("entity", clazz.getName());
         map.put("daoSimple", getDaoSimpleName(clazz));
-        map.put("entityID",getEntityID(clazz));
-        map.put("daoID",getDaoID(clazz));
+        map.put("entityID", getEntityID(clazz));
+        map.put("daoID", getDaoID(clazz));
         try {
-            template.process(map,new OutputStreamWriter(new FileOutputStream(daoTestFile)));
+            template.process(map, new OutputStreamWriter(new FileOutputStream(daoTestFile)));
         } catch (TemplateException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -179,20 +181,34 @@ public class DaoCodeGenerate {
                 Document document = saxReader.read(file);
                 Element rootElement = document.getRootElement();
 
-                //如果daobean 已经存在
+
+                /**
+                 * 删除节点方法
+                 */
+                Iterator iterator = rootElement.elementIterator();
+                while (iterator.hasNext()) {
+                    System.out.println();
+                    Element element = (Element) iterator.next();
+                    if (element.attribute("id").getData().equals(id)) {
+                        rootElement.remove(element);
+                    }
+
+                }
+
+ /*               //如果daobean 已经存在
                 if (document.asXML().indexOf(id) != -1) {
                     logger.warn("ID已经存在");
                     return;
-                    /**
-                     * TODO:xpath 问题
-                     */
-                    /*Element daoBean = (Element) document.selectSingleNode("//bean[@id='"+id+"']");
+                    *//**
+                 * TODO:xpath 问题
+                 *//*
+                    *//*Element daoBean = (Element) document.selectSingleNode("//bean[@id='"+id+"']");
 
                     if (daoBean != null) {
                         logger.warn("daoID已经存在");
                         document.remove(daoBean);
-                    }*/
-                }
+                    }*//*
+                }*/
 
                 OutputFormat format = OutputFormat.createPrettyPrint();
                 XMLWriter xmlWriter = null;
