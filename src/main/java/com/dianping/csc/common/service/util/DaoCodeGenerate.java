@@ -187,28 +187,14 @@ public class DaoCodeGenerate {
                  */
                 Iterator iterator = rootElement.elementIterator();
                 while (iterator.hasNext()) {
-                    System.out.println();
                     Element element = (Element) iterator.next();
                     if (element.attribute("id").getData().equals(id)) {
-                        rootElement.remove(element);
+//                        rootElement.remove(element);
+                        logger.warn("ID已经存在");
+                        return;
                     }
 
                 }
-
- /*               //如果daobean 已经存在
-                if (document.asXML().indexOf(id) != -1) {
-                    logger.warn("ID已经存在");
-                    return;
-                    *//**
-                 * TODO:xpath 问题
-                 *//*
-                    *//*Element daoBean = (Element) document.selectSingleNode("//bean[@id='"+id+"']");
-
-                    if (daoBean != null) {
-                        logger.warn("daoID已经存在");
-                        document.remove(daoBean);
-                    }*//*
-                }*/
 
                 OutputFormat format = OutputFormat.createPrettyPrint();
                 XMLWriter xmlWriter = null;
