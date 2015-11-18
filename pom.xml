@@ -17,6 +17,7 @@
         <servlet-api.version>2.5</servlet-api.version>
         <env>qa</env>
         <lombok.version>1.12.2</lombok.version>
+        <mysql-driver-version>5.1.26</mysql-driver-version>
     </properties>
 
     <dependencies>
@@ -81,6 +82,12 @@
         <!-- 通用框架开结束-->
 
 
+        <!-- DB driver -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-driver-version}</version>
+        </dependency>
         <!-- 点评框架开始 -->
         <dependency>
             <groupId>com.dianping.platform</groupId>
