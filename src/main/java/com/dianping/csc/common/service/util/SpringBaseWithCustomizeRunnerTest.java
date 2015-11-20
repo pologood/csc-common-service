@@ -12,7 +12,7 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
  */
 @RunWith(CustomizeJunit4ClassRunner.class)
 @ContextConfiguration(locations = {
-        "classpath:/config/spring/local/appcontext-*.xml"
+       "classpath*:/config/spring/local/appcontext-*.xml"
 })
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
