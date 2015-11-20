@@ -24,6 +24,8 @@ public class DaoCodeGenerate {
     public static final String CONFIG_SPRING_LOCAL_APPCONTEXT_CSC_DAO_XML = "/config/spring/local/appcontext-dao.xml";
     public static final String CONFIG_SQLMAP_SQLMAP_CONFIG_XML = "/config/sqlmap/sqlmap-config.xml";
     public static final String SQL_MAP_RESOURCE_CONFIG_SQLMAP_SQLMAP_ENTITY_ID_XML = "<sqlMap resource=\"config/sqlmap/sqlmap-entityID.xml\" />";
+    public static final String DATA_FTL = "/data/ftl";
+    public static final String CONFIG_FTL = "/config/ftl";
     private static Logger logger = Logger.getLogger(DaoCodeGenerate.class);
     private static SAXReader saxReader = new SAXReader();
 
@@ -55,18 +57,18 @@ public class DaoCodeGenerate {
         logger.info("ibatis sqlmap 生成成功!");
 
         //生成test
-        generateDaoTest(clazz,sourceDirectory,configuration);
+        generateDaoTest(clazz, sourceDirectory, configuration);
         logger.info("dao test生成成功！");
     }
 
     private static void generateDaoTest(Class clazz, File sourceDirectory, Configuration configuration) {
         File testSourceDirectory = getTestSourceDirectory(sourceDirectory);
-        String daoTestPath = testSourceDirectory+"/"+getDaoPackage(clazz).replace(".", "/") + "/"+getDaoSimpleName(clazz) + "Test.java";
+        String daoTestPath = testSourceDirectory + "/" + getDaoPackage(clazz).replace(".", "/") + "/" + getDaoSimpleName(clazz) + "Test.java";
         File daoTestFile = new File(daoTestPath);
-        if(daoTestFile.exists()){
+        if (daoTestFile.exists()) {
             logger.warn("daoTest文件已经存在");
             return;
-        }else{
+        } else {
             try {
                 daoTestFile.createNewFile();
             } catch (IOException e) {
@@ -85,10 +87,10 @@ public class DaoCodeGenerate {
         map.put("entitySimple", clazz.getSimpleName());
         map.put("entity", clazz.getName());
         map.put("daoSimple", getDaoSimpleName(clazz));
-        map.put("entityID",getEntityID(clazz));
-        map.put("daoID",getDaoID(clazz));
+        map.put("entityID", getEntityID(clazz));
+        map.put("daoID", getDaoID(clazz));
         try {
-            template.process(map,new OutputStreamWriter(new FileOutputStream(daoTestFile)));
+            template.process(map, new OutputStreamWriter(new FileOutputStream(daoTestFile)));
         } catch (TemplateException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -287,13 +289,57 @@ public class DaoCodeGenerate {
     private static Configuration getFreeMarkerConfiguration(Class clazz) {
         Configuration configuration = new Configuration();
         try {
-            //TODO:freemarker 读取jar中的ftl暂时不能实现
-            URL resource = clazz.getResource("/config/ftl");
-            configuration.setDirectoryForTemplateLoading(new File(resource.getFile().replace("%20", " ")));
+            File file = getTempFTLDirectory(clazz);
+            configuration.setDirectoryForTemplateLoading(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return configuration;
+    }
+
+    private static File getTempFTLDirectory(Class clazz) throws IOException {
+        //1.创建临时目录
+        File file = new File(DATA_FTL);
+        if (!file.exists() && !file.isDirectory()) {
+            file.mkdir();
+            logger.info("成功创建目录" + DATA_FTL);
+        }
+        //2.创建ftl模板
+        String daofileName = "/dao.ftl";
+        createTempFTLFile(clazz, daofileName);
+        logger.info("成功创建文件" + DATA_FTL + daofileName);
+
+        String daoTestFileName = "/daoTest.ftl";
+        createTempFTLFile(clazz, daoTestFileName);
+        logger.info("成功创建文件" + DATA_FTL + daoTestFileName);
+
+        String springDaoBeanFileName = "/spring-dao-bean.ftl";
+        createTempFTLFile(clazz, springDaoBeanFileName);
+        logger.info("成功创建文件" + DATA_FTL + springDaoBeanFileName);
+
+        String salmapFileName = "/sqlmap.ftl";
+        createTempFTLFile(clazz, salmapFileName);
+        logger.info("成功创建文件" + DATA_FTL + salmapFileName);
+        return file;
+    }
+
+    private static void createTempFTLFile(Class clazz, String fileName) throws IOException {
+        File daoFile = new File(DATA_FTL + fileName);
+        if (!daoFile.exists() && !daoFile.isFile()) {
+            daoFile.createNewFile();
+        }
+        InputStream inputStream = clazz.getResourceAsStream(CONFIG_FTL + fileName);
+
+        FileOutputStream fileOutputStream = new FileOutputStream(daoFile);
+
+        int bytesRead;
+        int bufferSize = 8192;
+        byte[] buffer = new byte[bufferSize];
+        while ((bytesRead = inputStream.read(buffer, 0, bufferSize)) != -1) {
+            fileOutputStream.write(buffer, 0, bytesRead);
+        }
+        fileOutputStream.close();
+        inputStream.close();
     }
 
     private static String getResourceDirectory(File sourceDirectory) {
