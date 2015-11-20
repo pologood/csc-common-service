@@ -71,6 +71,7 @@ service项目依赖使用。集成了dal层访问模式，pegion的注解bean，
 ```
 
 ## 自动生成Dao/bean/sqlmap/DaoTest 类
+
 本项目包含了生成如题这些类的模板文件。
 假设TestEntity为数据中的实体类，如果需要生成，可以使用如下代码：
 
