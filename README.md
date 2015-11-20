@@ -4,14 +4,19 @@
 service项目依赖使用。集成了dal层访问模式，pegion的注解bean，dp公用组件等。如果dp公用组件升级，可以直接升级本工具包，然后其他依赖于本包的项目再做升级
 
 ## 工具包情况
+
 最新的工具包依赖版本
-```xml
-        <dependency>
-            <groupId>com.dianping</groupId>
-            <artifactId>csc-common-service</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-```
+
+````xml
+
+       <dependency>
+           <groupId>com.dianping</groupId>
+           <artifactId>csc-common-service</artifactId>
+           <version>2.0.1</version>
+       </dependency>
+
+````
+
 
 功能点包含：
 1. 点评公用jar包依赖
