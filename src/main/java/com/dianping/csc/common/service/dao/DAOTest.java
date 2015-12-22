@@ -33,7 +33,9 @@ public abstract class DAOTest {
 
     @Test
     public void testInsert() throws Exception {
-        Assert.assertTrue(dao.insert(entity) > 0);
+        Integer result = dao.insert(entity);
+        Assert.assertTrue(result > 0);
+        Assert.assertTrue(dao.delete(result) > 0);
     }
 
     @Test
@@ -55,7 +57,7 @@ public abstract class DAOTest {
         doUpdate();
         int count = dao.update(id, entity);
         Assert.assertTrue(count > 0);
-        Assert.assertTrue(dao.delete(id)>0);
+        Assert.assertTrue(dao.delete(id) > 0);
     }
 
     /**
