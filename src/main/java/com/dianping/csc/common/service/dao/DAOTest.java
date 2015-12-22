@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -18,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(locations = {
         "classpath*:/config/spring/local/appcontext-*.xml"
 })
-@Transactional
 public abstract class DAOTest {
 
     protected DAO dao;
@@ -48,6 +46,7 @@ public abstract class DAOTest {
     public void testGet() throws Exception {
         Integer id = dao.insert(entity);
         Assert.assertEquals(entity, dao.get(id));
+        Assert.assertTrue(dao.delete(id) > 0);
     }
 
     @Test
@@ -56,6 +55,7 @@ public abstract class DAOTest {
         doUpdate();
         int count = dao.update(id, entity);
         Assert.assertTrue(count > 0);
+        Assert.assertTrue(dao.delete(id)>0);
     }
 
     /**
