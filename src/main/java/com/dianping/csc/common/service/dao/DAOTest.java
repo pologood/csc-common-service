@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
 /**
@@ -34,7 +33,9 @@ public abstract class DAOTest {
 
     @Test
     public void testInsert() throws Exception {
-        Assert.assertTrue(dao.insert(entity) > 0);
+        Integer result = dao.insert(entity);
+        Assert.assertTrue(result > 0);
+        Assert.assertTrue(dao.delete(result) > 0);
     }
 
     @Test
@@ -47,6 +48,7 @@ public abstract class DAOTest {
     public void testGet() throws Exception {
         Integer id = dao.insert(entity);
         Assert.assertEquals(entity, dao.get(id));
+        Assert.assertTrue(dao.delete(id) > 0);
     }
 
     @Test
@@ -55,6 +57,7 @@ public abstract class DAOTest {
         doUpdate();
         int count = dao.update(id, entity);
         Assert.assertTrue(count > 0);
+        Assert.assertTrue(dao.delete(id) > 0);
     }
 
     /**
