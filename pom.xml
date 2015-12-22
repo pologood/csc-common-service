@@ -6,7 +6,7 @@
 
     <groupId>com.dianping</groupId>
     <artifactId>csc-common-service</artifactId>
-    <version>2.1.0</version>
+    <version>2.1.1</version>
     <packaging>jar</packaging>
     <name>csc-common-service</name>
 
@@ -22,7 +22,7 @@
         <spring.version>4.1.2.RELEASE</spring.version>
         <junit.version>4.11</junit.version>
         <platform-sdk.version>1.2.7</platform-sdk.version>
-        <servlet-api.version>2.5</servlet-api.version>
+        <servlet-api.version>3.0-alpha-1</servlet-api.version>
         <env>qa</env>
         <mysql-driver-version>5.1.26</mysql-driver-version>
         <csc-common-util.version>2.0.4</csc-common-util.version>
@@ -72,14 +72,6 @@
 
         <!-- 添加 Spring 的架构结束-->
 
-        <!-- 通用框架开始 -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>${servlet-api.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- DB driver -->
         <dependency>
             <groupId>mysql</groupId>
@@ -115,6 +107,14 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- 通用框架开始 -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${servlet-api.version}</version>
             <scope>compile</scope>
         </dependency>
 
