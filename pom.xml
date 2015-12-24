@@ -6,7 +6,7 @@
 
     <groupId>com.dianping</groupId>
     <artifactId>csc-common-service</artifactId>
-    <version>2.2.0</version>
+    <version>2.2.1</version>
     <packaging>jar</packaging>
     <name>csc-common-service</name>
 
@@ -27,6 +27,7 @@
         <mysql-driver-version>5.1.26</mysql-driver-version>
         <csc-common-util.version>2.0.4</csc-common-util.version>
         <aspectjweaver.version>1.6.10</aspectjweaver.version>
+        <cglib.version>3.1</cglib.version>
     </properties>
 
     <dependencies>
@@ -75,6 +76,13 @@
             <artifactId>aspectjweaver</artifactId>
             <version>${aspectjweaver.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>${cglib.version}</version>
+        </dependency>
+
 
         <!-- 添加 Spring 的架构结束-->
         <!-- DB driver -->
