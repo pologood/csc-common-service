@@ -12,7 +12,7 @@ service项目依赖使用。集成了dal层访问模式，pegion的注解bean，
        <dependency>
            <groupId>com.dianping</groupId>
            <artifactId>csc-common-service</artifactId>
-           <version>2.0.1</version>
+           <version>2.2.2</version>
        </dependency>
 
 ````
@@ -23,6 +23,7 @@ service项目依赖使用。集成了dal层访问模式，pegion的注解bean，
 2. dal层使用方式定义
 3. dao层相关类模板定义
 4. dao层自动生成工具
+5. 测试相关基础服务
 ...
 
 ## DB连接需要的文件
