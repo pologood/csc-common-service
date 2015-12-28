@@ -18,6 +18,7 @@ public class WebPushAppender extends AppenderSkeleton {
     private String namespace;
     private String topic;
     private String lionSwitch;
+    private String app;
 
     private static WebSocketMessageService webSocketMessageService = ServiceFactory.getService(WebSocketMessageService.class);
 
@@ -25,9 +26,8 @@ public class WebPushAppender extends AppenderSkeleton {
     protected void append(LoggingEvent loggingEvent) {
         String logSwitch = LionUtil.getValue(lionSwitch, "0");
         if (logSwitch.equals("1")) {
-            log.warning(lionSwitch + ",的webpush 开关处于打开状态。");
             SocketMessageRequest socketMessageRequest = new SocketMessageRequest();
-            socketMessageRequest.setData(this.getLayout().format(loggingEvent));
+            socketMessageRequest.setData("【" + app + "】" + this.getLayout().format(loggingEvent));
             socketMessageRequest.setDestRequestNameSpace(namespace);
             socketMessageRequest.setTopic(topic);
             webSocketMessageService.sendMessage(socketMessageRequest);
