@@ -28,6 +28,7 @@
         <csc-common-util.version>2.0.4</csc-common-util.version>
         <aspectjweaver.version>1.6.10</aspectjweaver.version>
         <cglib.version>3.1</cglib.version>
+        <csc-websocket-api.version>2.0.1</csc-websocket-api.version>
     </properties>
 
     <dependencies>
@@ -114,6 +115,12 @@
             <groupId>com.dianping</groupId>
             <artifactId>csc-common-util</artifactId>
             <version>${csc-common-util.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dianping</groupId>
+            <artifactId>csc-websocket-api</artifactId>
+            <version>${csc-websocket-api.version}</version>
         </dependency>
 
         <dependency>
