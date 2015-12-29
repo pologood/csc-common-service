@@ -16,7 +16,7 @@ public class CustomizeJunit4ClassRunner extends SpringJUnit4ClassRunner {
         try {
             Log4jConfigurer.initLogging("classpath:log/log4j.xml");
         } catch (FileNotFoundException ex) {
-            System.err.println("Cannot load log4j,please check log4j.xml.bak file exist?");
+            System.err.println("Cannot load log4j,please check log4j.xml file exist?");
         }
     }
 
