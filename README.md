@@ -136,4 +136,4 @@ service项目依赖使用。集成了dal层访问模式，pegion的注解bean，
 
    展示的效果如：
 
-![image](http://code.dianpingoa.com/ba-csc/csc-websocket-service/raw/lightmerge/csc-websocket-service/src/main/resources/img/webPushAppender.png)
+![image](http://code.dianpingoa.com/ba-csc/csc-common-service/raw/lightmerge/src/main/resources/img/webPushAppender.png)
