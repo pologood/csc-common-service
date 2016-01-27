@@ -8,6 +8,11 @@ import java.util.HashMap;
 /**
  * Created by csophys on 15/11/18.
  */
+
+/**
+ * 获取Lionkey 的值建议直接用Lion工具api
+ * 请直接使用Lion api中提供的工具
+ */
 public class LionUtil {
     public static String getValue(String key, String defaultValue) {
         String value = null;
