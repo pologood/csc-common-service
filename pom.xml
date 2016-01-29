@@ -29,6 +29,8 @@
         <aspectjweaver.version>1.6.10</aspectjweaver.version>
         <cglib.version>3.1</cglib.version>
         <csc-websocket-api.version>2.0.1</csc-websocket-api.version>
+        <mybatis.version>3.2.8</mybatis.version>
+        <mybatis-spring.version>1.2.2</mybatis-spring.version>
     </properties>
 
     <dependencies>
@@ -87,6 +89,19 @@
 
         <!-- 添加 Spring 的架构结束-->
         <!-- DB driver -->
+        <!--dal-->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatis-spring.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

@@ -22,4 +22,16 @@
         <property name="expression"
                   value="execution(* com..dao..*.*(..)) and !execution(* com.dianping.avatar..dao..*.*(..))"/>
     </bean>
+
+    <!-- The SqlMapClient configuration for avatar-based System -->
+    <bean id="sqlMapClient" class="com.dianping.avatar.dao.ibatis.spring.LimitSqlMapClientFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:/config/sqlmap/sqlmap-config.xml"/>
+    </bean>
+
+    <!--dao 的默认实现-->
+    <bean id="daoRealizeTarget" class="com.dianping.avatar.dao.ibatis.IBatisGenericDaoImpl" abstract="true">
+        <property name="sqlMapClient" ref="sqlMapClient"/>
+    </bean>
+
 </beans>
