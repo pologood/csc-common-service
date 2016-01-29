@@ -1,46 +1,37 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
-<sqlMap namespace="${entitySimple}">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-    <insert id="insert">
-        INSERT INTO ${entitySimple}
+<mapper namespace="${dao}">
+
+    <insert id="insert" parameterType="${entity}" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO PEOPLE
         (
         AddTime,
-    <#list entityFields as field>
+        <#list entityFields as field>
         ${field.name}<#if field_has_next>,</#if>
-    </#list>
+        </#list>
         )
         VALUES
         (
         now(),
-    <#list entityFields as field>
-        #e.${field.name}#<#if field_has_next>,</#if>
-    </#list>
+        <#list entityFields as field>
+        ${r'#{'}${field.name}}<#if field_has_next>,</#if>
+        </#list>
         );
-        <selectKey resultClass="java.lang.Integer" keyProperty="id">
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
             SELECT LAST_INSERT_ID()
         </selectKey>
-
     </insert>
 
-    <delete id="delete">
-        DELETE FROM ${entitySimple}
-        WHERE Id = #id#;
-    </delete>
-
-
-    <select id="get" resultClass="${entity}">
-        SELECT * FROM ${entitySimple}
-        WHERE Id = #id#;
-    </select>
-
     <update id="update">
-        UPDATE  ${entitySimple}
+        UPDATE  PEOPLE
         SET
-    <#list entityFields as field>
-        ${field.name} = #e.${field.name}#<#if field_has_next>,</#if>
-    </#list>
-        WHERE Id = #id#;
+        <#list entityFields as field>
+        ${field.name} = ${r'#{'}${field.name}}#<#if field_has_next>,</#if>
+        </#list>
+        WHERE Id = ${r'#{id}'};
     </update>
 
-</sqlMap>
+</mapper>
