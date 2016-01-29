@@ -90,7 +90,7 @@ public class DaoCodeGenerate {
     }
 
     private static void generateSqlmap(Class clazz, File sourceDirectory, Configuration configuration) {
-        String sqlmapPath = getResourceDirectory(sourceDirectory) + "/config/mybatis/sqlmap/" + getEntityID(clazz) + ".xml";
+        String sqlmapPath = getResourceDirectory(sourceDirectory) + "/config/mybatis/sqlmap/" + clazz.getSimpleName() + ".xml";
         File sqlmapFile = new File(sqlmapPath);
 
         if (sqlmapFile.exists()) {

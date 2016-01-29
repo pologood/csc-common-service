@@ -6,7 +6,7 @@
 <mapper namespace="${dao}">
 
     <insert id="insert" parameterType="${entity}" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO PEOPLE
+        INSERT INTO ${entitySimple}
         (
         AddTime,
         <#list entityFields as field>
@@ -26,10 +26,10 @@
     </insert>
 
     <update id="update">
-        UPDATE  PEOPLE
+        UPDATE  ${entitySimple}
         SET
         <#list entityFields as field>
-        ${field.name} = ${r'#{'}${field.name}}#<#if field_has_next>,</#if>
+        ${field.name} = ${r'#{'}${field.name}}<#if field_has_next>,</#if>
         </#list>
         WHERE Id = ${r'#{id}'};
     </update>
