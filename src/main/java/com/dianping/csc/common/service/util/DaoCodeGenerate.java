@@ -25,7 +25,7 @@ public class DaoCodeGenerate {
     public static final String CONFIG_SQLMAP_SQLMAP_CONFIG_XML = "/config/sqlmap/sqlmap-config.xml";
     public static final String SQL_MAP_RESOURCE_CONFIG_SQLMAP_SQLMAP_ENTITY_ID_XML = "<sqlMap resource=\"config/sqlmap/sqlmap-entityID.xml\" />";
     public static final String DATA_FTL = "/data/ftl";
-    public static final String CONFIG_FTL = "/config/ftl";
+    public static final String CONFIG_FTL = "/config/ftl/avatar-dao";
     private static Logger logger = Logger.getLogger(DaoCodeGenerate.class);
     private static SAXReader saxReader = new SAXReader();
 

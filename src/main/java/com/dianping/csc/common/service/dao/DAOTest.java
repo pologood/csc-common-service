@@ -12,7 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 /**
  * Created by yuchao on 15/6/17.
  */
-
+@Deprecated
 @RunWith(CustomizeJunit4ClassRunner.class)
 @ContextConfiguration(locations = {
         "classpath*:/config/spring/local/appcontext-*.xml"

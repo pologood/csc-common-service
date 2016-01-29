@@ -11,6 +11,7 @@ import com.dianping.csc.common.service.entity.Entity;
  * <p/>
  * Created by yuchao on 15/6/17.
  */
+@Deprecated
 public interface DAO<T extends Entity> extends GenericDao {
     @DAOAction(action = DAOActionType.INSERT)
     Integer insert(@DAOParam("e") T entity);

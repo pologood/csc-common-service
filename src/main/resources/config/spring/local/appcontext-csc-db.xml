@@ -5,6 +5,18 @@
                            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
 
+    <!--myibatis-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations"
+                  value="classpath:config/mybatis/sqlmap/*.xml"/>
+    </bean>
+
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.dianping,com.sankuai"/>
+        <property name="markerInterface" value="com.dianping.csc.common.service.dao.SqlMapDao"/>
+    </bean>
 
 
 </beans>
