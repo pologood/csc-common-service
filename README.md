@@ -12,7 +12,7 @@ service项目依赖使用。集成了dal层访问模式，pegion的注解bean，
        <dependency>
            <groupId>com.dianping</groupId>
            <artifactId>csc-common-service</artifactId>
-           <version>2.2.3</version>
+           <version>2.3.0</version>
        </dependency>
 
 ````
@@ -31,7 +31,8 @@ service项目依赖使用。集成了dal层访问模式，pegion的注解bean，
 - 如果修改项目，以下三个文件可以直接在csc-framework-service中获取，为了使用dao类自动生成工具，文件的存放路径要和csc-framework-service中的一致
 - 如果新增项目，code上创建项目的时候可以直接从git@code.dianpingoa.com:ba-csc/csc-framework.git clone，然后按照csc-framework中的说明改造
 
-### 3.1 appcontext-db.xml
+### 3.1 Avatar-dao方式
+#### 3.1.1 appcontext-db.xml
 文件目录：resources/config/spring/local/
 该文件用于配置数据源， value为数据库的dal配置，如下：
 
@@ -45,7 +46,7 @@ service项目依赖使用。集成了dal层访问模式，pegion的注解bean，
 
 ````
 
-###  3.2 appcontext-dao.xml
+####  3.1.2 appcontext-dao.xml
 文件目录：resources/config/spring/local/
 配置dao bean，如下：
 
@@ -62,7 +63,7 @@ service项目依赖使用。集成了dal层访问模式，pegion的注解bean，
 
 ```
 
-### 3.3 sqlmap.config
+#### 3.1.3 sqlmap.config
 文件目录：resources/config/sqlmap/
 配置sqlmap 具体文件,如下:
 
@@ -72,6 +73,26 @@ service项目依赖使用。集成了dal层访问模式，pegion的注解bean，
 
 ```
 
+### 3.2 Mybatis-dao方式
+
+#### 3.2.1 appcontext-db.xml
+文件目录：resources/config/spring/local/
+该文件用于配置数据源， value为数据库的dal配置，如下：
+
+````xml
+
+     需要用dal配置一个datasource,如：
+     <!-- 数据源-->
+     <bean id="dataSource" class="com.dianping.zebra.group.jdbc.GroupDataSource" init-method="init">
+        <property name="jdbcRef" value="csconline"/>
+     </bean>
+
+````
+
+dao及对应的dao sqlmap文件可以通过下节中的工具自动生成。
+
+
+
 ## 4 自动生成Dao/bean/sqlmap/DaoTest 类
 
 本项目包含了生成如题这些类的模板文件。
@@ -79,10 +100,15 @@ service项目依赖使用。集成了dal层访问模式，pegion的注解bean，
 
 ```java
 
+      //Mybatis dao
       DaoCodeGenerate.generateByJavaBean(TestEntity.class);
 
+      //Avatar dao
+      AvatarDaoCodeGenerate.generateByJavaBean(TestEntity.class);
+
 ```
-为了和实体类名称对应。数据库表名不能包含下划线。
+
+为了和实体类名称对应。数据库表名不能包含下划线。如果采用的是Mybatis的dal方式，则mapper映射文件需要放在config/mybatis/sqlmap/目录下。
 
 ## 5 服务器日志输出
 
