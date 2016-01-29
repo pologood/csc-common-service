@@ -110,6 +110,10 @@ dao及对应的dao sqlmap文件可以通过下节中的工具自动生成。
 
 为了和实体类名称对应。数据库表名不能包含下划线。如果采用的是Mybatis的dal方式，则mapper映射文件需要放在config/mybatis/sqlmap/目录下。
 
+可以查看生成dao层代码的简单视频，总共不到2分钟。
+
+https://pan.sankuai.com/link/UMQKFyWVX8Dh
+
 ## 5 服务器日志输出
 
 目前作为dp的监控平台，cat已经提供了很多强大的功能。但是还有一些缺点，不能很好的满足客服这边的需要。
