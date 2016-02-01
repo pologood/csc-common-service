@@ -1,0 +1,1 @@
+mybatis 的sqlmap映射文件目录
