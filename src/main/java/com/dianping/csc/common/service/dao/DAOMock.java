@@ -15,6 +15,7 @@ import java.util.*;
  * <p/>
  * Created by yuchao on 15/6/17.
  */
+@Deprecated
 public class DAOMock<T extends Entity> implements DAO<T> {
     protected int id = 0;
     protected Map<Integer, T> db = Maps.newLinkedHashMap();
